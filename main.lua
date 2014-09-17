@@ -123,8 +123,9 @@ function userKeyInBarcode(getObj)
 
 end   
 
-numericField = native.newTextField( 150, 150, 220, 50 )
+numericField = native.newTextField( centerX-100, centerY, 220, 45 )
 numericField.inputType = "number"
+numericField.y = display.contentCenterX + 120
 
 numericField:addEventListener( "userInput", userKeyInBarcode)
 
@@ -135,7 +136,7 @@ end
 
 function Main()
     titleBg = display.newImage('titleBg.png', 70, 35)
-    playBtn = display.newImage('playBtn.png', 200, 400)
+    playBtn = display.newImage('playBtn.png', screenLeft+100, 400)
     titleView = display.newGroup(titleBg, playBtn)
     startButtonListeners('add')
     
@@ -183,7 +184,7 @@ eatVegeHolder = display.newImage('03.png', centerX-162, 223)
 
 
 -- Instructions
-ins = display.newImage('instructions.png', centerX-120, 390)
+ins = display.newImage('instructions.png', centerX-190, 390)
 transition.from(ins, {time = 400, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(3000, 
@@ -286,6 +287,15 @@ end
 
 function eatMost()
 	eatMorePopUp = display.newImage( 'popup-eatmost.png', centerX-162, 223 )
+	transition.from(eatMorePopUp, {time = 300, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(2000, 
+			    	         function() transition.to(eatMorePopUp, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0, 
+			    	       onComplete = function() display.remove(eatModeratePopUp,eatMostPopUp,eatMorePopUp,eatMorePopUp1) 
+			    	              ins = nil end}) end) end})	
 end
 
 
@@ -306,7 +316,7 @@ function dragTheFood(e)
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
         eatLess()
-        --audio.play(correctSnd)   
+          
 
     elseif(e.target.name == 'no2' and e.phase == 'ended' and hitTestObjects(e.target, eatModerateHolder)) then
         e.target.x = display.contentCenterX
@@ -329,6 +339,7 @@ function dragTheFood(e)
         e.target.y = 350
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
+        eatMost()
           
 
     elseif(e.target.name == 'no5' and e.phase == 'ended' and hitTestObjects(e.target, eatVegeHolder)) then
@@ -349,7 +360,7 @@ function dragTheFood(e)
 end
     
 function alert()
-    alertView = display.newImage('discount.png', display.contentCenterX-120, 450)
+    alertView = display.newImage('discount.png', display.contentCenterX-200, 450)
     transition.from(alertView, {time = 200, alpha = 0.1})
 end
 
