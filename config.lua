@@ -2,7 +2,7 @@ application = {
 	content = {
 		width = 480,
 		height = 800, 
-		scale = "letterBox",
+		scale = "zoomFix",
 		fps = 30,
         graphicsCompatibility = 1,
 		

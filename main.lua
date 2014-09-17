@@ -22,6 +22,13 @@ display.setStatusBar(display.HiddenStatusBar)
  
 -- [Background]
 local bg = display.newImage('bg.png')
+--local bgVector = display.newRect( screenWidth, screenHeight, display.contentWidth, display.contentHeight )
+--bgVector:setFillColor(23,43,165)
+
+
+
+-- [user numeric input]
+local numericField
 
 -- [Title View]
 local titleBg
@@ -50,6 +57,12 @@ local eatthemost
 -- Alert
 local alertView
 
+-- PopUp
+local eatLessPopUp
+local eatModeratePopUp 
+local eatMorePopUp
+local eatMostPopUp 
+
 -- Sounds
 --local correctSnd = audio.loadSound('correct.caf')
 local DisSnd = audio.loadSound('discount.mp3')
@@ -60,41 +73,79 @@ local correct = 0 -- Counts the correct dropped items
 
 -- Functions
 local Main = {}
+local Barcode = {}
 local startButtonListeners = {}
 local showGameView = {}
 local gameListeners = {}
 local hitTestObjects = {}
 local dragTheFood = {}
 local alert = {}
+local userKeyInBarcode = {}
+local runMe = {}
+local eatLess = {}
+local eatModerate = {}
+local eatMore = {}
+local eatMost = {}
+local removeBarcode = {}
+local eatMore1 = {}
 
 --Nemeric Input
---local function userKeyInBarcode( event )
 
-    --if ( event.phase == "began" ) then
+function runMe()
+	Barcode()
+end
 
-        -- user begins enter barcode
-        --print( event.text )
-    --end   
---end
+function userKeyInBarcode(getObj)
 
---local numericField = native.newTextField( 150, 150, 220, 36 )
---numericField.inputType = "number"
 
---numericField:addEventListener( "userInput", userKeyInBarcode )
+	return function (event)
 
+		print( "Barcode is: ".. tostring( getObj() ) )
+
+        if ( "began" == event.phase ) then
+            -- This is the "keyboard has appeared" event
+
+        elseif ( "ended" == event.phase and 'mydd2014' ) then
+            -- This event is called when the user stops editing a field:
+            -- for example, when they touch a different field or keyboard focus goes away
+            Barcode()
+
+            print( "Barcode is" ..tostring( getObj().text ) )         -- display the text entered
+
+        elseif ( "submitted" == event.phase and 'mydd2014' ) then
+            -- This event occurs when the user presses the "return" key
+            -- (if available) on the onscreen keyboard
+
+            -- Hide keyboard
+            native.setKeyboardFocus( nil )
+        end
+    end     -- "return function()"
+
+end   
+
+numericField = native.newTextField( 150, 150, 220, 50 )
+numericField.inputType = "number"
+
+numericField:addEventListener( "userInput", userKeyInBarcode)
+
+
+function Barcode()
+	Main()
+end
 
 function Main()
     titleBg = display.newImage('titleBg.png', 70, 35)
     playBtn = display.newImage('playBtn.png', 200, 400)
     titleView = display.newGroup(titleBg, playBtn)
     startButtonListeners('add')
-end
+    
+ end
 
 
 function startButtonListeners(action)
     if(action == 'add') then
         playBtn:addEventListener('tap', showGameView)
-        
+
     else
         playBtn:removeEventListener('tap', showGameView)
         
@@ -109,6 +160,17 @@ function showGameView:tap(e)
    onComplete = function() startButtonListeners('rmv') display.remove(titleView) 
     titleView = nil 
     end})
+
+
+function removeBarcode()
+	removeBc = display.newGroup(numericField)
+	transition.to(removeBc, 
+    	{time = 300, 
+    		x = -removeBc.height, 
+   onComplete = function() startButtonListeners ('rmv') display.remove(removeBc) 
+    removeBc = nil 
+    end})
+end
 
 
 -- Place holders
@@ -154,13 +216,11 @@ end
 
 
 function gameListeners()
-
     eatless:addEventListener('touch', dragTheFood)
     eatmoderate:addEventListener('touch', dragTheFood)
     eatmore:addEventListener('touch', dragTheFood)
     eatthemost:addEventListener('touch', dragTheFood)
     eatvege:addEventListener('touch', dragTheFood)
-
 end
 
 
@@ -170,6 +230,62 @@ function hitTestObjects(obj1, obj2)
         local up = obj1.contentBounds.yMin <= obj2.contentBounds.yMin and obj1.contentBounds.yMax >= obj2.contentBounds.yMin
         local down = obj1.contentBounds.yMin >= obj2.contentBounds.yMin and obj1.contentBounds.yMin <= obj2.contentBounds.yMax
         return (left or right) and (up or down)
+end
+
+function eatLess()
+	eatLessPopUp = display.newImage( 'popup-eatless.png', centerX-200, 10 )
+	transition.from(eatLessPopUp, {time = 300, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(2000, 
+			    	         function() transition.to(eatLessPopUp, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(eatLessPopUp,eatModeratePopUp) 
+			    	              ins = nil end}) end) end})
+end
+
+function eatModerate()
+	eatModeratePopUp = display.newImage( 'popup-eatmoderate.png', centerX-120, 90 )
+	transition.from(eatModeratePopUp, {time = 300, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(2000, 
+			    	         function() transition.to(eatModeratePopUp, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(eatModeratePopUp,eatLessPopUp,eatMorePopUp) 
+			    	              ins = nil end}) end) end})	
+end
+
+function eatMore()
+	eatMorePopUp = display.newImage( 'popup-eatmore.png', centerX-55, 195 )
+	transition.from(eatMorePopUp, {time = 300, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(2000, 
+			    	         function() transition.to(eatMorePopUp, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0, 
+			    	       onComplete = function() display.remove(eatModeratePopUp,eatMostPopUp,eatMorePopUp) 
+			    	              ins = nil end}) end) end})		
+end
+
+function eatMore1()
+	eatMorePopUp1 = display.newImage( 'popup-eatmore.png', centerX-250, 195 )
+	transition.from(eatMorePopUp1, {time = 300, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(2000, 
+			    	         function() transition.to(eatMorePopUp1, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0, 
+			    	       onComplete = function() display.remove(eatModeratePopUp,eatMostPopUp,eatMorePopUp,eatMorePopUp1) 
+			    	              ins = nil end}) end) end})		
+end
+
+function eatMost()
+	eatMorePopUp = display.newImage( 'popup-eatmost.png', centerX-162, 223 )
 end
 
 
@@ -189,6 +305,7 @@ function dragTheFood(e)
         e.target.y = 99
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
+        eatLess()
         --audio.play(correctSnd)   
 
     elseif(e.target.name == 'no2' and e.phase == 'ended' and hitTestObjects(e.target, eatModerateHolder)) then
@@ -196,13 +313,15 @@ function dragTheFood(e)
         e.target.y = 185
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
+        eatModerate()
         
 
     elseif(e.target.name == 'no3' and e.phase == 'ended' and hitTestObjects(e.target, eatMoreHolder)) then
-        e.target.x = display.contentCenterX
+        e.target.x = display.contentCenterX + 50
         e.target.y = 270
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
+        eatMore()
          
 
     elseif(e.target.name == 'no4' and e.phase == 'ended' and hitTestObjects(e.target, eatTheMostHolder)) then
@@ -213,10 +332,11 @@ function dragTheFood(e)
           
 
     elseif(e.target.name == 'no5' and e.phase == 'ended' and hitTestObjects(e.target, eatVegeHolder)) then
-        e.target.x = display.contentCenterX - 100
-        e.target.y = 280
+        e.target.x = display.contentCenterX - 70
+        e.target.y = 270
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
+        eatMore1()
           
     end
         
@@ -234,4 +354,4 @@ function alert()
 end
 
 
-Main()
+runMe()
