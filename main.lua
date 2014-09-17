@@ -38,6 +38,7 @@ local titleView
 
 -- App Background
 local mainBg
+local texture1
 
 -- Instructions
 local ins
@@ -88,6 +89,7 @@ local eatMore = {}
 local eatMost = {}
 local removeBarcode = {}
 local eatMore1 = {}
+local texture = {}
 
 --Nemeric Input
 
@@ -132,46 +134,54 @@ numericField:addEventListener( "userInput", userKeyInBarcode)
 
 function Barcode()
 	Main()
+	-- hide the image
+	--texture1.isVisible = false
+
+	-- remove the image
+	--texture1:removeSelf()
 end
 
 function Main()
     titleBg = display.newImage('titleBg.png', 70, 35)
     playBtn = display.newImage('playBtn.png', screenLeft+100, 400)
     titleView = display.newGroup(titleBg, playBtn)
-    startButtonListeners('add')
+    startButtonListeners('add')   
+    texture()
+
     
+end
+
+function texture()
+ 	texture1 = display.newImage('texture.png', centerX-225,display.contentCenterY+125 )	
+ 	texture2 = display.newImage('texture.png', centerX-225,display.contentCenterY+125 )	
+ 	--transition.to( texture1, { time=1500, alpha=1, x=50, y=200, onComplete=texture } )
+ 	transition.from(texture1, {time = 5000, alpha = 0})
+ 	transition.to(texture2, {time = 200, alpha = 1})
  end
+
 
 
 function startButtonListeners(action)
     if(action == 'add') then
         playBtn:addEventListener('tap', showGameView)
 
+
     else
         playBtn:removeEventListener('tap', showGameView)
-        
+        numericField:removeSelf()
+        --numericField.inVisible = false
     end
 end
 
 
 function showGameView:tap(e)
     transition.to(titleView, 
-    	{time = 300, 
+    	{time = 200, 
     		x = -titleView.height, 
    onComplete = function() startButtonListeners('rmv') display.remove(titleView) 
     titleView = nil 
     end})
 
-
-function removeBarcode()
-	removeBc = display.newGroup(numericField)
-	transition.to(removeBc, 
-    	{time = 300, 
-    		x = -removeBc.height, 
-   onComplete = function() startButtonListeners ('rmv') display.remove(removeBc) 
-    removeBc = nil 
-    end})
-end
 
 
 -- Place holders
@@ -179,7 +189,7 @@ end
 eatLessHolder = display.newImage('01.png', centerX-80, 10)
 eatModerateHolder = display.newImage('02.png', centerX-120, 152)
 eatMoreHolder = display.newImage('03.png', centerX-162, 223)
-eatTheMostHolder = display.newImage('04.png', centerX-223, 298)
+eatTheMostHolder = display.newImage('04.png', centerX-223, 295)
 eatVegeHolder = display.newImage('03.png', centerX-162, 223)
 
 
@@ -187,7 +197,7 @@ eatVegeHolder = display.newImage('03.png', centerX-162, 223)
 ins = display.newImage('instructions.png', centerX-190, 390)
 transition.from(ins, {time = 400, 
 					 alpha = 0.1, 
-			    onComplete = function() timer.performWithDelay(3000, 
+			    onComplete = function() timer.performWithDelay(5000, 
 			    	         function() transition.to(ins, 
 
 			    	         	{time = 200, 
@@ -198,11 +208,11 @@ transition.from(ins, {time = 400,
 
 -- Food Pyramid Items To Drag
 
-    eatless = display.newImage('eatless.png', centerX-35, 530)
-    eatmoderate = display.newImage('eatmoderate.png', centerX+60, 650)
+    eatless = display.newImage('eatless.png', centerX+35, 550)
+    eatmoderate = display.newImage('eatmoderate.png', centerX+45, 670)
     eatmore = display.newImage('eatmore.png', centerX-185, 550)
-    eatthemost = display.newImage('eatthemost.png', centerX-250, 650)
-    eatvege = display.newImage('eatvege.png', centerX-100, 650)
+    eatthemost = display.newImage('eatthemost.png', centerX-250, 670)
+    eatvege = display.newImage('eatvege.png', centerX-100, 670)
 
 
     eatless.name = 'no1'
