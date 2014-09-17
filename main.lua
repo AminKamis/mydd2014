@@ -21,7 +21,7 @@ display.setStatusBar(display.HiddenStatusBar)
 -- UI/UX
  
 -- [Background]
-local bg = display.newImage('bg.png')
+local bg = display.newImage('images/bg.png')
 --local bgVector = display.newRect( screenWidth, screenHeight, display.contentWidth, display.contentHeight )
 --bgVector:setFillColor(23,43,165)
 
@@ -66,7 +66,7 @@ local eatMostPopUp
 
 -- Sounds
 --local correctSnd = audio.loadSound('correct.caf')
-local DisSnd = audio.loadSound('discount.mp3')
+local DisSnd = audio.loadSound('audio/discount.mp3')
 
 
 -- Variables
@@ -142,8 +142,8 @@ function Barcode()
 end
 
 function Main()
-    titleBg = display.newImage('titleBg.png', 70, 35)
-    playBtn = display.newImage('playBtn.png', screenLeft+100, 400)
+    titleBg = display.newImage('images/titleBg.png', 70, 35)
+    playBtn = display.newImage('images/playBtn.png', screenLeft+100, 400)
     titleView = display.newGroup(titleBg, playBtn)
     startButtonListeners('add')   
     texture()
@@ -152,8 +152,8 @@ function Main()
 end
 
 function texture()
- 	texture1 = display.newImage('texture.png', centerX-225,display.contentCenterY+125 )	
- 	texture2 = display.newImage('texture.png', centerX-225,display.contentCenterY+125 )	
+ 	texture1 = display.newImage('images/texture.png', centerX-225,display.contentCenterY+125 )	
+ 	texture2 = display.newImage('images/texture.png', centerX-225,display.contentCenterY+125 )	
  	--transition.to( texture1, { time=1500, alpha=1, x=50, y=200, onComplete=texture } )
  	transition.from(texture1, {time = 5000, alpha = 0})
  	transition.to(texture2, {time = 200, alpha = 1})
@@ -186,15 +186,15 @@ function showGameView:tap(e)
 
 -- Place holders
 
-eatLessHolder = display.newImage('01.png', centerX-80, 10)
-eatModerateHolder = display.newImage('02.png', centerX-120, 152)
-eatMoreHolder = display.newImage('03.png', centerX-162, 223)
-eatTheMostHolder = display.newImage('04.png', centerX-223, 295)
-eatVegeHolder = display.newImage('03.png', centerX-162, 223)
+eatLessHolder = display.newImage('images/01.png', centerX-80, 10)
+eatModerateHolder = display.newImage('images/02.png', centerX-120, 152)
+eatMoreHolder = display.newImage('images/03.png', centerX-162, 223)
+eatTheMostHolder = display.newImage('images/04.png', centerX-223, 295)
+eatVegeHolder = display.newImage('images/03.png', centerX-162, 223)
 
 
 -- Instructions
-ins = display.newImage('instructions.png', centerX-190, 390)
+ins = display.newImage('images/instructions.png', centerX-190, 390)
 transition.from(ins, {time = 400, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(5000, 
@@ -208,11 +208,11 @@ transition.from(ins, {time = 400,
 
 -- Food Pyramid Items To Drag
 
-    eatless = display.newImage('eatless.png', centerX+35, 550)
-    eatmoderate = display.newImage('eatmoderate.png', centerX+45, 670)
-    eatmore = display.newImage('eatmore.png', centerX-185, 550)
-    eatthemost = display.newImage('eatthemost.png', centerX-250, 670)
-    eatvege = display.newImage('eatvege.png', centerX-100, 670)
+    eatless = display.newImage('images/eatless.png', centerX+35, 550)
+    eatmoderate = display.newImage('images/eatmoderate.png', centerX+45, 670)
+    eatmore = display.newImage('images/eatmore.png', centerX-185, 550)
+    eatthemost = display.newImage('images/eatthemost.png', centerX-250, 670)
+    eatvege = display.newImage('images/eatvege.png', centerX-100, 670)
 
 
     eatless.name = 'no1'
@@ -244,7 +244,7 @@ function hitTestObjects(obj1, obj2)
 end
 
 function eatLess()
-	eatLessPopUp = display.newImage( 'popup-eatless.png', centerX-200, 10 )
+	eatLessPopUp = display.newImage( 'images/popup-eatless.png', centerX-200, 10 )
 	transition.from(eatLessPopUp, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
@@ -257,7 +257,7 @@ function eatLess()
 end
 
 function eatModerate()
-	eatModeratePopUp = display.newImage( 'popup-eatmoderate.png', centerX-120, 90 )
+	eatModeratePopUp = display.newImage( 'images/popup-eatmoderate.png', centerX-120, 90 )
 	transition.from(eatModeratePopUp, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
@@ -270,7 +270,7 @@ function eatModerate()
 end
 
 function eatMore()
-	eatMorePopUp = display.newImage( 'popup-eatmore.png', centerX-55, 195 )
+	eatMorePopUp = display.newImage( 'images/popup-eatmore.png', centerX-55, 195 )
 	transition.from(eatMorePopUp, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
@@ -283,7 +283,7 @@ function eatMore()
 end
 
 function eatMore1()
-	eatMorePopUp1 = display.newImage( 'popup-eatmore.png', centerX-250, 195 )
+	eatMorePopUp1 = display.newImage( 'images/popup-eatmore.png', centerX-250, 195 )
 	transition.from(eatMorePopUp1, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
@@ -296,7 +296,7 @@ function eatMore1()
 end
 
 function eatMost()
-	eatMorePopUp = display.newImage( 'popup-eatmost.png', centerX-162, 223 )
+	eatMorePopUp = display.newImage( 'images/popup-eatmost.png', centerX-162, 223 )
 	transition.from(eatMorePopUp, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
@@ -370,7 +370,7 @@ function dragTheFood(e)
 end
     
 function alert()
-    alertView = display.newImage('discount.png', display.contentCenterX-200, 450)
+    alertView = display.newImage('images/discount.png', display.contentCenterX-200, 450)
     transition.from(alertView, {time = 200, alpha = 0.1})
 end
 
