@@ -3,6 +3,18 @@
 -- main.lua
 --
 -----------------------------------------------------------------------------------------
+-- most commonly used screen coordinates
+centerX = display.contentCenterX
+centerY = display.contentCenterY
+screenLeft = display.screenOriginX
+screenWidth = display.contentWidth - screenLeft * 2
+screenRight = screenLeft + screenWidth
+screenTop = display.screenOriginY
+screenHeight = display.contentHeight - screenTop * 2
+screenBottom = screenTop + screenHeight
+display.contentWidth = screenWidth
+display.contentHeight = screenHeight
+
 
 display.setStatusBar(display.HiddenStatusBar)
 
@@ -56,24 +68,24 @@ local dragTheFood = {}
 local alert = {}
 
 --Nemeric Input
-local function userKeyInBarcode( event )
+--local function userKeyInBarcode( event )
 
-    if ( event.phase == "began" ) then
+    --if ( event.phase == "began" ) then
 
         -- user begins enter barcode
-        print( event.text )
-    end   
-end
+        --print( event.text )
+    --end   
+--end
 
-local numericField = native.newTextField( 150, 150, 220, 36 )
-numericField.inputType = "number"
+--local numericField = native.newTextField( 150, 150, 220, 36 )
+--numericField.inputType = "number"
 
-numericField:addEventListener( "userInput", userKeyInBarcode )
+--numericField:addEventListener( "userInput", userKeyInBarcode )
 
 
 function Main()
     titleBg = display.newImage('titleBg.png', 70, 35)
-    playBtn = display.newImage('playBtn.png', 138, 240)
+    playBtn = display.newImage('playBtn.png', 200, 400)
     titleView = display.newGroup(titleBg, playBtn)
     startButtonListeners('add')
 end
@@ -95,28 +107,24 @@ function showGameView:tap(e)
     	{time = 300, 
     		x = -titleView.height, 
    onComplete = function() startButtonListeners('rmv') display.remove(titleView) 
-    titleView = nil end})
-
-
--- Main Background
-mainBg = display.newImage('mainBg.png', 10, 350)
+    titleView = nil 
+    end})
 
 
 -- Place holders
 
-eatLessHolder = display.newImage('01.png', x, y)
-eatModerateHolder = display.newImage('02.png', x, y)
-eatMoreHolder = display.newImage('03.png', x, y)
-eatTheMostHolder = display.newImage('04.png', x, y)
---eatVegeHolder = display.newImage('05.png', x, y)
-
+eatLessHolder = display.newImage('01.png', centerX-80, 10)
+eatModerateHolder = display.newImage('02.png', centerX-120, 152)
+eatMoreHolder = display.newImage('03.png', centerX-162, 223)
+eatTheMostHolder = display.newImage('04.png', centerX-223, 298)
+eatVegeHolder = display.newImage('03.png', centerX-162, 223)
 
 
 -- Instructions
-ins = display.newImage('instructions.png', 45, 270)
-transition.from(ins, {time = 200, 
+ins = display.newImage('instructions.png', centerX-120, 390)
+transition.from(ins, {time = 400, 
 					 alpha = 0.1, 
-			    onComplete = function() timer.performWithDelay(2000, 
+			    onComplete = function() timer.performWithDelay(3000, 
 			    	         function() transition.to(ins, 
 
 			    	         	{time = 200, 
@@ -127,11 +135,11 @@ transition.from(ins, {time = 200,
 
 -- Food Pyramid Items To Drag
 
-    eatless = display.newImage('eatless.png', 240, 386)
-    eatmoderate = display.newImage('eatmoderate.png', 240, 386)
-    eatmore = display.newImage('eatmore.png', 240, 386)
-    eatthemost = display.newImage('eatthemost.png', 240, 386)
-    eatvege = display.newImage('eatvege.png', 240, 386)
+    eatless = display.newImage('eatless.png', centerX-35, 530)
+    eatmoderate = display.newImage('eatmoderate.png', centerX+60, 650)
+    eatmore = display.newImage('eatmore.png', centerX-185, 550)
+    eatthemost = display.newImage('eatthemost.png', centerX-250, 650)
+    eatvege = display.newImage('eatvege.png', centerX-100, 650)
 
 
     eatless.name = 'no1'
@@ -151,6 +159,7 @@ function gameListeners()
     eatmoderate:addEventListener('touch', dragTheFood)
     eatmore:addEventListener('touch', dragTheFood)
     eatthemost:addEventListener('touch', dragTheFood)
+    eatvege:addEventListener('touch', dragTheFood)
 
 end
 
@@ -175,40 +184,40 @@ function dragTheFood(e)
         e.target.y = e.y - lastY
 
          
-    --elseif(e.target.name == 'no1' and e.phase == 'ended' and hitTestObjects(e.target, eatLessHolder)) then
-        --e.target.x = 
-        --e.target.y = 
-        --e.target:removeEventListener('touch', dragTheFood)
-        --correct = correct + 1
-        --audio.play(correctSnd)   
-
-    --elseif(e.target.name == 'no2' and e.phase == 'ended' and hitTestObjects(e.target, eatModerateHolder)) then
-        --e.target.x = 
-        --e.target.y = 
-        --e.target:removeEventListener('touch', dragTheFood)
-        --correct = correct + 1
-        --audio.play(correctSnd)   
-
-    --elseif(e.target.name == 'no3' and e.phase == 'ended' and hitTestObjects(e.target, eatMoreHolder)) then
-        --e.target.x = 
-        --e.target.y = 
-        --e.target:removeEventListener('touch', dragTheFood)
-        --correct = correct + 1
-        --audio.play(correctSnd)   
-
-    --elseif(e.target.name == 'no4' and e.phase == 'ended' and hitTestObjects(e.target, eatTheMostHolder)) then
-        --e.target.x = 
-        --e.target.y = 
-        --e.target:removeEventListener('touch', dragTheFood)
-        --correct = correct + 1
-        --audio.play(correctSnd)  
-
-    elseif(e.target.name == 'no5' and e.phase == 'ended' and hitTestObjects(e.target, eatVegeHolder)) then
-        e.target.x = 60.5
-        e.target.y = 175
+    elseif(e.target.name == 'no1' and e.phase == 'ended' and hitTestObjects(e.target, eatLessHolder)) then
+        e.target.x = display.contentCenterX
+        e.target.y = 99
         e.target:removeEventListener('touch', dragTheFood)
         correct = correct + 1
-        --audio.play(correctSnd)    
+        --audio.play(correctSnd)   
+
+    elseif(e.target.name == 'no2' and e.phase == 'ended' and hitTestObjects(e.target, eatModerateHolder)) then
+        e.target.x = display.contentCenterX
+        e.target.y = 185
+        e.target:removeEventListener('touch', dragTheFood)
+        correct = correct + 1
+        
+
+    elseif(e.target.name == 'no3' and e.phase == 'ended' and hitTestObjects(e.target, eatMoreHolder)) then
+        e.target.x = display.contentCenterX
+        e.target.y = 270
+        e.target:removeEventListener('touch', dragTheFood)
+        correct = correct + 1
+         
+
+    elseif(e.target.name == 'no4' and e.phase == 'ended' and hitTestObjects(e.target, eatTheMostHolder)) then
+        e.target.x = display.contentCenterX
+        e.target.y = 350
+        e.target:removeEventListener('touch', dragTheFood)
+        correct = correct + 1
+          
+
+    elseif(e.target.name == 'no5' and e.phase == 'ended' and hitTestObjects(e.target, eatVegeHolder)) then
+        e.target.x = display.contentCenterX - 100
+        e.target.y = 280
+        e.target:removeEventListener('touch', dragTheFood)
+        correct = correct + 1
+          
     end
         
     if(e.phase == 'ended' and correct == 5) then
@@ -220,7 +229,7 @@ function dragTheFood(e)
 end
     
 function alert()
-    alertView = display.newImage('discount.png', 95, 270)
+    alertView = display.newImage('discount.png', display.contentCenterX-120, 450)
     transition.from(alertView, {time = 200, alpha = 0.1})
 end
 
