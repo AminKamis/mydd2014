@@ -112,13 +112,16 @@ function userKeyInBarcode(getObj)
 
 		print( "Barcode is: ".. tostring( getObj() ) )
 
-        if ( "began" == event.phase ) then
+        if ( "began" == event.phase and 'mydd2014' ) then
             -- This is the "keyboard has appeared" event
+            --Barcode()
+            native.setKeyboardFocus( numericField )
 
         elseif ( "ended" == event.phase and 'mydd2014' ) then
             -- This event is called when the user stops editing a field:
             -- for example, when they touch a different field or keyboard focus goes away
-            Barcode()
+            --Barcode()
+            native.setKeyboardFocus( numericField )
 
             print( "Barcode is" ..tostring( getObj().text ) )         -- display the text entered
 
@@ -127,14 +130,15 @@ function userKeyInBarcode(getObj)
             -- (if available) on the onscreen keyboard
 
             -- Hide keyboard
-            native.setKeyboardFocus( nil )
+            native.setKeyboardFocus( numericField )
+
         end
     end     -- "return function()"
 
 end   
 
-numericField = native.newTextField( centerX-100, centerY, 220, 45 )
-numericField.inputType = "number"
+numericField = native.newTextField( centerX-100, centerY, 220, 60 )
+numericField.inputType = "number" and "numeric"
 numericField.y = display.contentCenterX + 120
 
 numericField:addEventListener( "userInput", userKeyInBarcode)
@@ -152,7 +156,8 @@ end
 function Main()
     titleBg = display.newImage('images/titleBg.png', 70, 35)
     playBtn = display.newImage('images/playBtn.png', screenLeft+100, 400)
-    titleView = display.newGroup(titleBg, playBtn)
+    local logo = display.newImage( 'images/logo.png', 180, 190 )
+    titleView = display.newGroup(titleBg, playBtn, logo)
     startButtonListeners('add')   
     texture()
 
@@ -368,7 +373,7 @@ function eatMore1()
 
 			    	         	{time = 200, 
 			    	         	alpha = 0, 
-			    	       onComplete = function() display.remove(eatMorePopUp1,eatMostPopUp) 
+			    	       onComplete = function() display.remove(eatMorePopUp1,eatMostPopUp2) 
 			    	              ins = nil end}) end) end})
 	zalora()		    	              		
 end
@@ -382,7 +387,7 @@ function eatMost()
 
 			    	         	{time = 200, 
 			    	         	alpha = 0, 
-			    	       onComplete = function() display.remove(eatMorePopUp,eatMorePopUp1) 
+			    	       onComplete = function() display.remove(eatMorePopUp2,eatMorePopUp1) 
 			    	              ins = nil end}) end) end})	
 	advertise()
 end
@@ -450,6 +455,11 @@ end
 function alert()
     alertView = display.newImage('images/discount.png', display.contentCenterX-200, 450)
     transition.from(alertView, {time = 200, alpha = 0.1})
+    eatMorePopUp1:removeSelf( )
+    eatMorePopUp2:removeSelf( )
+    eatMostPopUp:removeSelf( )
+    eatModeratePopUp:removeSelf( )
+    eatMorePopUp:removeSelf( )
 
     
 end
