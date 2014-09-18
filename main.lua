@@ -62,6 +62,8 @@ local alertView
 local eatLessPopUp
 local eatModeratePopUp 
 local eatMorePopUp
+local eatMorePopUp1
+local eatMorePopUp2
 local eatMostPopUp 
 
 -- Sounds
@@ -91,6 +93,12 @@ local removeBarcode = {}
 local eatMore1 = {}
 local texture = {}
 
+--Ads Func
+local point = {}
+local point2 = {}
+local voucher = {}
+local zalora = {}
+local advertise ={}
 --Nemeric Input
 
 function runMe()
@@ -151,12 +159,78 @@ function Main()
     
 end
 
+
+function point()
+	local pointImg = display.newImage( 'images/point.png',315, 538)
+	transition.from(pointImg, {time = 400, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(5000, 
+			    	         function() transition.to(pointImg, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(pointImg) 
+			    	              ins = nil end}) end) end})
+end
+
+function point2()
+	local point2Img = display.newImage( 'images/point2.png',319, 664)
+	transition.from(point2Img, {time = 400, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(5000, 
+			    	         function() transition.to(point2Img, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(point2Img) 
+			    	        point2Img = nil end}) end) end})	
+end
+
+function voucher()
+	local voucherImg = display.newImage( 'images/voucher.png',20, 538)
+	transition.from(voucherImg, {time = 400, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(5000, 
+			    	         function() transition.to(voucherImg, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(voucherImg) 
+			    	       voucherImg = nil end}) end) end})	
+end
+
+function zalora()
+	local zaloraImg = display.newImage( 'images/zalora.png',170, 664)
+	transition.from(zaloraImg, {time = 400, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(5000, 
+			    	         function() transition.to(zaloraImg, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(zaloraImg) 
+			    	        zaloraImg = nil end}) end) end})
+end
+
+function advertise()
+	local AdsImg = display.newImage( 'images/ads.png',20, 664)
+	transition.from(AdsImg, {time = 400, 
+					 alpha = 0.1, 
+			    onComplete = function() timer.performWithDelay(5000, 
+			    	         function() transition.to(AdsImg, 
+
+			    	         	{time = 200, 
+			    	         	alpha = 0.1, 
+			    	       onComplete = function() display.remove(AdsImg) 
+			    	           AdsImg = nil end}) end) end})	
+end
+
+
+
+
 function texture()
  	texture1 = display.newImage('images/texture.png', centerX-225,display.contentCenterY+125 )	
- 	texture2 = display.newImage('images/texture.png', centerX-225,display.contentCenterY+125 )	
- 	--transition.to( texture1, { time=1500, alpha=1, x=50, y=200, onComplete=texture } )
- 	transition.from(texture1, {time = 5000, alpha = 0})
- 	transition.to(texture2, {time = 200, alpha = 1})
+
  end
 
 
@@ -248,12 +322,13 @@ function eatLess()
 	transition.from(eatLessPopUp, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
-			    	         function() transition.to(eatLessPopUp, 
+			    	         function() transition.to(eatLessPopUp,
 
 			    	         	{time = 200, 
-			    	         	alpha = 0.1, 
+			    	         	alpha = 0, 
 			    	       onComplete = function() display.remove(eatLessPopUp,eatModeratePopUp) 
 			    	              ins = nil end}) end) end})
+	 point()
 end
 
 function eatModerate()
@@ -264,9 +339,10 @@ function eatModerate()
 			    	         function() transition.to(eatModeratePopUp, 
 
 			    	         	{time = 200, 
-			    	         	alpha = 0.1, 
-			    	       onComplete = function() display.remove(eatModeratePopUp,eatLessPopUp,eatMorePopUp) 
-			    	              ins = nil end}) end) end})	
+			    	         	alpha = 0, 
+			    	       onComplete = function() display.remove(eatModeratePopUp,eatMorePopUp) 
+			    	              ins = nil end}) end) end})
+	point2()	
 end
 
 function eatMore()
@@ -278,8 +354,9 @@ function eatMore()
 
 			    	         	{time = 200, 
 			    	         	alpha = 0, 
-			    	       onComplete = function() display.remove(eatModeratePopUp,eatMostPopUp,eatMorePopUp) 
-			    	              ins = nil end}) end) end})		
+			    	       onComplete = function() display.remove(eatMorePopUp,eatMorePopUp1,eatModeratePopUp) 
+			    	              ins = nil end}) end) end})
+	voucher()
 end
 
 function eatMore1()
@@ -287,25 +364,27 @@ function eatMore1()
 	transition.from(eatMorePopUp1, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
-			    	         function() transition.to(eatMorePopUp1, 
+			    	         function() transition.to(eatMorePopUp1,  
 
 			    	         	{time = 200, 
 			    	         	alpha = 0, 
-			    	       onComplete = function() display.remove(eatModeratePopUp,eatMostPopUp,eatMorePopUp,eatMorePopUp1) 
-			    	              ins = nil end}) end) end})		
+			    	       onComplete = function() display.remove(eatMorePopUp1,eatMostPopUp) 
+			    	              ins = nil end}) end) end})
+	zalora()		    	              		
 end
 
 function eatMost()
-	eatMorePopUp = display.newImage( 'images/popup-eatmost.png', centerX-162, 223 )
-	transition.from(eatMorePopUp, {time = 300, 
+	eatMorePopUp2 = display.newImage( 'images/popup-eatmost.png', centerX-162, 223 )
+	transition.from(eatMorePopUp2, {time = 300, 
 					 alpha = 0.1, 
 			    onComplete = function() timer.performWithDelay(2000, 
 			    	         function() transition.to(eatMorePopUp, 
 
 			    	         	{time = 200, 
 			    	         	alpha = 0, 
-			    	       onComplete = function() display.remove(eatModeratePopUp,eatMostPopUp,eatMorePopUp,eatMorePopUp1) 
+			    	       onComplete = function() display.remove(eatMorePopUp,eatMorePopUp1) 
 			    	              ins = nil end}) end) end})	
+	advertise()
 end
 
 
@@ -362,7 +441,6 @@ function dragTheFood(e)
     end
         
     if(e.phase == 'ended' and correct == 5) then
-        --audio.stop()
         audio.play(DisSnd)
         alert()
    	end
@@ -372,6 +450,8 @@ end
 function alert()
     alertView = display.newImage('images/discount.png', display.contentCenterX-200, 450)
     transition.from(alertView, {time = 200, alpha = 0.1})
+
+    
 end
 
 
